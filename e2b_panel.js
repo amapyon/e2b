@@ -1,5 +1,8 @@
 'use strict';
 
+const PRINTER_IP = '192.168.11.4';
+const HOST_IP = '192.168.11.89';
+
 process.on('uncaughtException', function(err) {
   console.log('====uncaughtException====');
   console.log(err.messaage);
@@ -7,46 +10,46 @@ process.on('uncaughtException', function(err) {
   console.log('=========================');
 });
 
-function E2B() {
 
-const dgram = require('dgram');
-const udpServer = dgram.createSocket('udp4');
+function e2b() {
 
-const net = require('net');
-const Scannar = require('./scan.js').Scanner;
+  const dgram = require('dgram');
+  const udpServer = dgram.createSocket('udp4');
 
-udpServer.on('error', (err) => {
-  console.log(`UDP server error:\n${err.stack}`);
-  udpServer.close();
-});
+  const net = require('net');
+  const Scannar = require('./scan.js').Scanner;
 
-udpServer.on('message', (msg, rinfo) => {
-//  console.log(`UDP server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
-// console.log(msg);
-// console.log(rinfo);
-  regist(msg);
-});
+  udpServer.on('error', (err) => {
+    console.log(`UDP server error:\n${err.stack}`);
+    udpServer.close();
+  });
 
-udpServer.on('listening', () => {
-  var address = udpServer.address();
-  console.log('UDP server listening to %j', address);
-});
+  udpServer.on('message', (msg, rinfo) => {
+  //  console.log(`UDP server got: ${msg} from ${rinfo.address}:${rinfo.port}`);
+  // console.log(msg);
+  // console.log(rinfo);
+    regist(msg);
+  });
 
-udpServer.bind(2968, function onConnected() {
-  udpServer.addMembership('239.255.255.253');
-});
+  udpServer.on('listening', () => {
+    var address = udpServer.address();
+    console.log('UDP server listening to %j', address);
+  });
+
+  udpServer.bind(2968, function onConnected() {
+    udpServer.addMembership('239.255.255.253');
+  });
 
 function regist(msg) {
-  var headder = "\u0002\u0007\u0000\u0000\uFFFF\u0000\u0000\u0000\u0000\u0000\u0000\uFFFF\u0000\u0002\u0065\u006e\u0000\u0000\u0000\uFFFF";
-  var message = "(ClientName=COPY),(IPAddress=192.168.11.89),(EventPort=2968)" + "\u0000";
-  var buffer = new Buffer(headder + message, "ascii");
+  var headder = '\u0002\u0007\u0000\u0000\uFFFF\u0000\u0000\u0000\u0000\u0000\u0000\uFFFF\u0000\u0002\u0065\u006e\u0000\u0000\u0000\uFFFF';
+  var message = '(ClientName=COPY),(IPAddress=' + HOST_IP + '),(EventPort=2968)' + '\u0000';
+  var buffer = new Buffer(headder + message, 'ascii');
   buffer[4] = message.length + 20;
   buffer[11] = msg[11];
   buffer[19] = message.length;
 //  console.log(buffer);
 //  console.log(buffer.length);
-  udpServer.send(buffer, 0, buffer.length, 2968, '192.168.11.4');
-
+  udpServer.send(buffer, 0, buffer.length, 2968, PRINTER_IP);
 }
 
 var tcpServer2968 = net.createServer();  
@@ -160,7 +163,7 @@ setTimeout(function () {
 
 };
 
-exports.E2B = E2B;
+exports.e2b = e2b;
 
 // (ip.src == 192.168.11.4 || ip.dst == 192.168.11.4) && tcp.port == 2968
 
