@@ -1,20 +1,21 @@
 {
-  "name": "e2b_file",
+  "name": "e2b_panel",
   "version": "1.0.0",
-  "description": "Epson's scanner data to Brother Printer.",
+  "description": "Tiny Copy System for Epson's scanner to Brother Printer.",
   "main": "index.js",
   "scripts": {
     "test": "test",
-    "start": "/home/masaru/pj/node/nvm/versions/node/v4.3.1/bin/node index.js"
+    "start": "/home/masaru/pj/node/nvm/versions/node/v4.3.1/bin/node daemon.js start",
+    "stop": "/home/masaru/pj/node/nvm/versions/node/v4.3.1/bin/node daemon.js stop"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/amapyon/e2b_file.git"
+    "url": "git://github.com/amapyon/e2b_panel.git"
   },
   "author": "amapyon",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/amapyon/e2b_file/issues"
+    "url": "https://github.com/amapyon/e2b_panel/issues"
   },
-  "homepage": "https://github.com/amapyon/e2b_file#readme"
+  "homepage": "https://github.com/amapyon/e2b_panel#readme"
 }

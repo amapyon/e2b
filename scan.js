@@ -37,7 +37,7 @@ Scanner.prototype.scan = function(cb) {
 
 }
 
-Scanner.prototype.scan_hadler = function(err, stdout, stderr) {
+Scanner.prototype.scan_handler = function(err, stdout, stderr) {
   console.error('Scanner#scan_handler');
   if (err) {
     console.error(err);

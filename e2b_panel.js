@@ -7,6 +7,8 @@ process.on('uncaughtException', function(err) {
   console.log('=========================');
 });
 
+function E2B() {
+
 const dgram = require('dgram');
 const udpServer = dgram.createSocket('udp4');
 
@@ -155,6 +157,10 @@ setTimeout(function () {
   tcpServer2968.close();
 }, 60000);
 */
+
+};
+
+exports.E2B = E2B;
 
 // (ip.src == 192.168.11.4 || ip.dst == 192.168.11.4) && tcp.port == 2968
 
